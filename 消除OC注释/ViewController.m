@@ -28,7 +28,7 @@
     for (NSString *tmpStr in arr) {
         //找到每行中包含//的注释然后删除"//"注释后的字符串
         NSRange rangeHeader=[tmpStr rangeOfString:@"//"];
-        if ([tmpStr containsString:@"//"]) {
+        if (rangeHeader.location!=NSNotFound) {
            NSString *trimmingStr=[tmpStr substringToIndex:rangeHeader.location];
             [subStringArr addObject:trimmingStr];
         }else{
@@ -40,7 +40,7 @@
     //删除"/* */"的注释内容
     NSRange range1=[subString rangeOfString:@"/*"];
     NSRange range2=[subString rangeOfString:@"*/"];
-    if ([subString containsString:@"/*"]) {
+    if (range1.location!=NSNotFound) {
         NSString *sub=[subString substringWithRange:NSMakeRange(range1.location,range2.location-range1.location+range2.length)];
         subString=[subString stringByReplacingOccurrencesOfString:sub withString:@""];
     }
